@@ -7,14 +7,6 @@ function createDiamonds() {
         return;
     }
     
-    // 使用容器的实际高度
-    const containerHeight = container.offsetHeight;
-    console.log('菱形图案容器高度:', containerHeight);
-    
-    const diamondCount = 6; // 钻石数量
-    const spacing = containerHeight / (diamondCount + 1); // 间距
-    console.log('菱形间距:', spacing);
-    
     // 歌手数据
     const singers = [
         {
@@ -60,6 +52,12 @@ function createDiamonds() {
             ],
         }
     ];
+
+    // 使用容器的实际高度
+    const containerHeight = container.offsetHeight;
+    
+    const diamondCount = singers.length; // 钻石数量
+    const spacing = containerHeight / (diamondCount + 1); // 间距
     
     // 创建钻石
     for (let i = 1; i <= diamondCount; i++) {
@@ -69,7 +67,6 @@ function createDiamonds() {
         // 设置位置
         const diamondPosition = i * spacing;
         diamond.style.top = diamondPosition + 'px';
-        console.log('菱形', i, '位置:', diamondPosition);
         
         // 添加点击事件
         diamond.addEventListener('click', () => {
@@ -307,47 +304,6 @@ function initSingerCarousel(carousel) {
 
 // 等待DOM加载完成后执行
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM加载完成，开始执行JavaScript');
-    
     // 创建菱形图案
     createDiamonds();
-    
-    // 移动端菜单相关元素
-    const menuToggle = document.getElementById('menu-toggle'); // 获取菜单切换按钮
-    const mobileMenu = document.getElementById('mobile-menu'); // 获取移动端菜单
-    
-    // 汉堡菜单切换逻辑
-    let menuOpen = false; // 菜单是否打开的状态，初始值为false（关闭）
-    
-    // 菜单切换按钮点击事件
-    menuToggle.addEventListener('click', () => {
-        if (!menuOpen) {
-            // 打开菜单
-            menuToggle.classList.add('open'); // 添加open类，改变汉堡按钮样式
-            mobileMenu.classList.remove('menu-slide-out'); // 移除滑出动画类
-            mobileMenu.classList.add('menu-slide-in'); // 添加滑入动画类
-            menuOpen = true; // 更新菜单状态为打开
-        } else {
-            // 关闭菜单
-            menuToggle.classList.remove('open'); // 移除open类，恢复汉堡汉堡按钮样式
-            mobileMenu.classList.remove('menu-slide-in'); // 移除滑入动画类
-            mobileMenu.classList.add('menu-slide-out'); // 添加滑出动画类
-            menuOpen = false; // 更新菜单状态为关闭
-        }
-    });
-    
-    // 点击移动端菜单项点击事件
-    const mobileMenuItems = mobileMenu.querySelectorAll('a'); // 获取所有菜单项
-    mobileMenuItems.forEach(item => {
-        item.addEventListener('click', () => {
-            // 如果点击的是当前页面的链接，则关闭菜单但不跳转
-            if (item.getAttribute('href') === window.location.pathname) {
-                menuToggle.classList.remove('open'); // 移除open类，恢复汉堡按钮样式
-                mobileMenu.classList.remove('menu-slide-in'); // 移除滑入动画类
-                mobileMenu.classList.add('menu-slide-out'); // 添加滑出动画类
-                menuOpen = false; // 更新菜单状态为关闭
-                return false; // 阻止默认跳转行为
-            }
-        });
-    });
 });
