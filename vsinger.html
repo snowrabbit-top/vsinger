@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>虚拟歌手 - Vsinger</title>
+    <!-- 引入Tailwind CSS框架 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome Awesome Awesome Awesome图标库 -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Tailwind配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6', // 主色调：蓝色
+                        secondary: '#6366F1', // 次要色调：靛蓝色
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'], // 无衬线字体
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- 自定义CSS样式 -->
+    <style type="text/tailwindcss">
+        :root {
+            --menu-burger-color: white;
+            --logo-shadow: 0 2px 4px rgba(255, 255, 255, 0.2);
+            --logo-transition: all 0.3s ease;
+        }
+        
+        @layer utilities {
+            /* 汉堡菜单按钮样式 */
+            .menu-btn {
+                position: relative; /* 相对定位位 */
+                width: 30px; /* 宽度为30像素 */
+                height: 30px; /* 高度为30像素 */
+                cursor: pointer; /* 鼠标悬停时显示手型 */
+                z-index: 50; /* 确保在其他元素上方 */
+            }
+            
+            /* 汉堡菜单菜单中间线线样式 */
+            .menu-btn__burger {
+                position: absolute; /* 绝对定位 */
+                width: 28px; /* 宽度为28像素 */
+                height: 3px; /* 高度为3像素 */
+                background: var(--menu-burger-color); /* 使用使用CSS变量 */
+                border-radius: 5px; /* 圆角，5像素 */
+                transition: all 0.5s ease-in-out; /* 过渡效果，持续0.5秒 */
+                top: 50%; /* 垂直居中 */
+                left: 50%; /* 水平居中 */
+                transform: translate(-50%, -50%); /* 居中 */
+            }
+            
+            /* 汉堡菜单上下线样式 */
+            .menu-btn__burger::before,
+            .menu-btn__burger::after {
+                content: ''; /* 空内容 */
+                position: absolute; /* 绝对定位 */
+                width: 28px; /* 宽度为28像素 */
+                height: 3px; /* 高度为3像素 */
+                background: var(--menu-burger-color); /* 使用CSS变量 */
+                border-radius: 5px; /* 圆角，5像素 */
+                transition: all 0.5s ease-in-out; /* 过渡效果，持续0.5秒 */
+            }
+            
+            /* 汉堡菜单上线位置 */
+            .menu-btn__burger::before {
+                transform: translateY(-10px); /* 向上移动10像素 */
+            }
+            
+            /* 汉堡菜单菜单下线位置 */
+            .menu-btn__burger::after {
+                transform: translateY(10px); /* 向下移动10像素 */
+            }
+            
+            /* 菜单打开状态的汉堡按钮样式 */
+            .menu-btn.open .menu-btn__burger {
+                transform: translateX(-50px); /* 向左移动50像素 */
+                background: transparent; /* 透明背景 */
+            }
+            
+            /* 菜单单打开状态的汉堡按钮按钮上线样式 */
+            .menu-btn.open .menu-btn__burger::before {
+                transform: rotate(45deg) translate(35px, -35px); /* 旋转45度并移动 */
+            }
+            
+            /* 菜单单打开打开状态的汉堡按钮下线样式 */
+            .menu-btn.open .menu-btn__burger::after {
+                transform: rotate(-45deg) translate(35px, 35px); /* 旋转-45度并移动 */
+            }
+            
+            /* 菜单滑入动画 */
+            .menu-slide-in {
+                animation: slideIn 0.5s forwards; /* 应用滑入动画，持续0.5秒 */
+            }
+            
+            /* 菜单滑出动画 */
+            .menu-slide-out {
+                animation: slideOut 0.5s forwards; /* 应用滑出动画，持续0.5秒 */
+            }
+            
+            /* 滑入动画关键帧 */
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%); /* 从右侧100%位置开始 */
+                }
+                to {
+                    transform: translateX(0); /* 移动到0位置 */
+                }
+            }
+            
+            /* 滑出动画关键帧 */
+            @keyframes slideOut {
+                from {
+                    transform: translateX(0); /* 从0位置开始 */
+                }
+                to {
+                    transform: translateX(100%); /* 移动到右侧100%位置 */
+                }
+            }
+            
+            /* Logo容器样式 */
+            .logo-container {
+                position: relative;
+                display: inline-block;
+            }
+            
+            /* Logo图片图片样式 */
+            .logo-img {
+                height: 10vh;
+                max-height: 40px;
+                transition: var(--logo-transition);
+                filter: drop-shadow(var(--logo-shadow));
+            }
+            
+            /* Logo悬悬停效果 */
+            .logo-container:hover .logo-img {
+                transform: scale(1.05);
+                filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+            }
+            
+            /* Logo边框效果 - 用于浅色背景 */
+            .logo-img.light-bg {
+                filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+            }
+            
+            /* 轮播图下方黑色区域样式 - 根据根据最新要求修改 */
+            .footer-area {
+                background-color: #000;
+                color: #fff;
+                padding: 15px 0;
+                text-align: center;
+                font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 20;
+            }
+            
+            .footer-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
+            
+            /* 主要内容区域 - 三列布局 */
+            .footer-main {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 10px;
+                gap: 15px;
+            }
+            
+            /* 每列内容 */
+            .footer-column {
+                text-align: center;
+                font-size: 0.9rem;
+                letter-spacing: 1px;
+            }
+            
+            /* 分隔符样式 */
+            .footer-separator {
+                color: #888;
+                font-size: 0.9rem;
+            }
+            
+            /* 链接接样式 */
+            .footer-link {
+                color: #fff;
+                text-decoration: none;
+                transition: all 0.3s ease;
+                position: relative;
+            }
+            
+            /* 悬停效果 */
+            .footer-link:hover {
+                color: #3B82F6; /* 蓝色时变为蓝色 */
+            }
+            
+            /* 悬时添加下划线动画效果 */
+            .footer-link::after {
+                content: '';
+                position: absolute;
+                bottom: -3px;
+                left: 0;
+                width: 0;
+                height: 1px;
+                background-color: #3B82F6;
+                transition: width 0.3s ease;
+            }
+            
+            .footer-link:hover::after {
+                width: 100%;
+            }
+            
+            /* 版权权信息样式 */
+            .footer-copyright {
+                font-size: 0.75rem;
+                color: #888;
+                letter-spacing: 0.5px;
+            }
+            
+            /* 响应应式调整 */
+            @media (max-width: 768px) {
+                .footer-main {
+                    flex-direction: row;
+                    gap: 10px;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                }
+                
+                /* 移动端显示分隔符 */
+                .footer-separator {
+                    display: block;
+                }
+                
+                /* 移动端每列内容 */
+                .footer-column {
+                    margin-bottom: 0;
+                }
+                
+                /* 移动端时效果优化 */
+                .footer-link:hover::after {
+                    width: 60%;
+                    left: 20%;
+                }
+            }
+            
+            /* 平板板端样式 (768px - 1024px) */
+            @media (min-width: 768px) and (max-width: 1024px) {
+                .footer-main {
+                    flex-direction: row;
+                    gap: 15px;
+                }
+                
+                /* 平板板端显示分隔符 */
+                .footer-separator {
+                    display: block;
+                }
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-sans bg-black">
+    <!-- 导航栏 -->
+    <header class="fixed top-0 left-0 right-0 z-50 flex justify-between items-center p-4">
+        <!-- Logo -->
+        <div class="logo">
+            <a href="index.html" class="flex items-center">
+                <!-- Logo图片 -->
+                <div class="logo-container">
+                    <img src="https://p11-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/633cd88a74b440f7b3e46e017871317f.png~tplv-a9rns2rl98-24:720:720.png?rcl=20251106040901589D909647E231041ED4&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1762978141&x-signature=S%2BuUqlNlwks5WBNk9GQ0NvpNCvY%3D" alt="Vsinger Logo" class="logo-img">
+                </div>
+            </a>
+        </div>
+        
+        <!-- 汉堡菜单按钮 - 所有设备都显示 -->
+        <div>
+            <!-- 汉堡菜单按钮，id为menu-toggle -->
+            <div id="menu-toggle" class="menu-btn">
+                <!-- 汉堡菜单中间线 -->
+                <div class="menu-btn__burger"></div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- 菱形图案 -->
+    <div class="diamond-pattern"></div>
+    
+    <!-- 歌手信息展示区域 -->
+    <div id="singer-info-container" class="fixed top-0 left-[20%] w-1/2 h-full flex items-center justify-center z-10 opacity-0 transition-opacity 0.5s ease"></div>
+    
+    <!-- 汉堡菜单 - 所有设备都使用相同的菜单 -->
+    <div id="mobile-menu" class="fixed top-0 right-0 w-64 h-full bg-black bg-opacity-95 z-40 transform translate-x-full transition-transform 0.3s ease">
+        <!-- 导航菜单 -->
+        <nav class="flex flex-col space-y-4 p-4 mt-16">
+            <!-- 菜单项：首页 -->
+            <a href="index.html" class="text-white font-medium py-2 border-b border-gray-700">首页</a>
+            <!-- 菜单项：虚拟歌手 -->
+            <a href="vsinger.html" class="text-white font-medium py-2 border-b border-gray-700">虚拟歌手</a>
+            <!-- 菜单项：线下活动 -->
+            <a href="#" class="text-white font-medium py-2 border-b border-gray-700">线下下活动</a>
+            <!-- 菜单项：作品 -->
+            <a href="#" class="text-white font-medium py-2 border-b border-gray-700">作品</a>
+            <!-- 菜单项：关于我们 -->
+            <a href="#" class="text-white font-medium py-2">关于我们</a>
+        </nav>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="footer-area">
+        <div class="footer-content">
+            <div class="footer-main">
+                <!-- 第一列 -->
+                <div class="footer-column">
+                    <a href="#" class="footer-link">合作网站</a>
+                </div>
+                
+                <!-- 分隔符 -->
+                <div class="footer-separator">|</div>
+                
+                <!-- 第二列 -->
+                <div class="footer-column">
+                    <a href="#" class="footer-link">加入我们</a>
+                </div>
+                
+                <!-- 分隔符 -->
+                <div class="footer-separator">|</div>
+                
+                <!-- 第三列 -->
+                <div class="footer-column">
+                    <a href="#" class="footer-link" id="staff-list-btn">staff名单</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Staff名单弹窗 -->
+    <div id="staff-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+        <!-- 背景遮罩 -->
+        <div class="absolute inset-0 bg-black bg-opacity-75 transition-opacity duration-300" id="modal-overlay"></div>
+        
+        <!-- 弹窗内容 -->
+        <div class="relative bg-white rounded-lg p-8 max-w-md w-full mx-4 text-center transform transition-all duration-300 scale-95 opacity-0" id="modal-content">
+            <!-- 关闭按钮 -->
+            <button id="close-modal" class="absolute top-2 right-3 text-gray-500 hover:text-gray-700 transition-colors duration-300">
+                <i class="fa fa-times text-xl"></i>
+            </button>
+            
+            <!-- 弹窗标题 -->
+            <h3 class="text-2xl font-bold mb-6 text-black">Staff名单</h3>
+            
+            <!-- 弹窗内容 -->
+            <div class="text-left space-y-3 text-black">
+                <p class="text-lg"><strong>服务器资源提供：</strong>Arki233</p>
+                <p class="text-lg"><strong>网页设计：</strong>金色残影</p>
+                <p class="text-lg"><strong>网站制作：</strong>金色残影</p>
+                <p class="text-lg"><strong>技术支持：</strong>金色残影</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        // Staff名单弹窗功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const staffModal = document.getElementById('staff-modal');
+            const staffListBtn = document.getElementById('staff-list-btn');
+            const closeModal = document.getElementById('close-modal');
+            const modalOverlay = document.getElementById('modal-overlay');
+            const modalContent = document.getElementById('modal-content');
+            
+            // 打开弹窗
+            staffListBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                staffModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // 防止背景滚动
+                
+                // 添加淡入动画
+                setTimeout(() => {
+                    modalContent.classList.remove('scale-95', 'opacity-0');
+                    modalContent.classList.add('scale-100', 'opacity-100');
+                }, 10);
+            });
+            
+            // 关闭弹窗
+            function closeModalFunc() {
+                // 添加淡出动画
+                modalContent.classList.remove('scale-100', 'opacity-100');
+                modalContent.classList.add('scale-95', 'opacity-0');
+                
+                // 动画结束后完全隐藏弹窗
+                setTimeout(() => {
+                    staffModal.classList.add('hidden');
+                    document.body.style.overflow = ''; // 恢复背景滚动
+                }, 300);
+            }
+            
+            closeModal.addEventListener('click', closeModalFunc);
+            modalOverlay.addEventListener('click', closeModalFunc);
+        });
+    </script>
+</body>
+</html>
