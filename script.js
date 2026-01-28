@@ -17,7 +17,7 @@ function createDiamonds(singers) {
     for (let i = 1; i <= diamondCount; i++) {
         const diamond = document.createElement('div');
         diamond.classList.add('diamond');
-        
+
         // 设置位置
         const diamondPosition = i * spacing;
         diamond.style.top = diamondPosition + 'px';
@@ -28,28 +28,28 @@ function createDiamonds(singers) {
             document.querySelectorAll('.diamond').forEach(d => {
                 d.classList.remove('active');
             });
-            
+
             // 添加当前钻石的活跃状态
             diamond.classList.add('active');
-            
+
             // 显示对应歌手信息
             showSingerInfo(singers[i - 1]);
             renderSingerProfile(singers[i - 1]);
         });
-        
+
         // 添加到容器
         container.appendChild(diamond);
-        
+
         // 创建歌手名字
         const singerName = document.createElement('div');
         singerName.classList.add('singer-name');
         singerName.textContent = singers[i - 1].name;
         singerName.style.top = diamondPosition + 'px';
-        
+
         // 添加到容器
         container.appendChild(singerName);
     }
-    
+
     // 默认激活第一个钻石
     const firstDiamond = document.querySelector('.diamond');
     if (firstDiamond) {
@@ -67,7 +67,7 @@ function showSingerInfo(singer) {
         console.error('歌手信息容器不存在');
         return;
     }
-    
+
     // 创建歌手信息元素
     let singerInfo = document.querySelector('.singer-info');
     if (!singerInfo) {
@@ -75,14 +75,14 @@ function showSingerInfo(singer) {
         singerInfo.classList.add('singer-info');
         container.appendChild(singerInfo);
     }
-    
+
     // 清空现有内容
     singerInfo.innerHTML = '';
-    
+
     // 创建幻灯片容器
     const carousel = document.createElement('div');
     carousel.classList.add('singer-carousel');
-    
+
     // 创建幻灯片
     singer.images.forEach((image, index) => {
         const slide = document.createElement('div');
@@ -90,44 +90,44 @@ function showSingerInfo(singer) {
         if (index === 0) {
             slide.classList.add('active');
         }
-        
+
         // 创建图片
         const img = document.createElement('img');
         img.src = image;
         img.alt = singer.name;
-        
+
         // 添加到幻灯片
         slide.appendChild(img);
-        
+
         // 添加到幻灯片容器
         carousel.appendChild(slide);
     });
-    
+
     // 创建控制按钮容器
     const controls = document.createElement('div');
     controls.classList.add('singer-controls');
-    
+
     // 创建上一张按钮
     const prevBtn = document.createElement('div');
     prevBtn.classList.add('singer-control-btn', 'prev-btn');
     prevBtn.innerHTML = '<i class="fa fa-angle-left"></i>';
-    
+
     // 创建下一张按钮
     const nextBtn = document.createElement('div');
     nextBtn.classList.add('singer-control-btn', 'next-btn');
     nextBtn.innerHTML = '<i class="fa fa-angle-right"></i>';
-    
+
     // 添加到控制按钮容器
     controls.appendChild(prevBtn);
     controls.appendChild(nextBtn);
-    
+
     // 添加到幻灯片容器
     carousel.appendChild(controls);
-    
+
     // 创建指示器容器
     const indicators = document.createElement('div');
     indicators.classList.add('singer-indicators');
-    
+
     // 创建指示器
     singer.images.forEach((_, index) => {
         const indicator = document.createElement('div');
@@ -136,17 +136,17 @@ function showSingerInfo(singer) {
             indicator.classList.add('active');
         }
         indicator.setAttribute('data-index', index);
-        
+
         // 添加到指示器容器
         indicators.appendChild(indicator);
     });
-    
+
     // 添加到幻灯片容器
     carousel.appendChild(indicators);
-    
+
     // 添加到歌手信息容器
     singerInfo.appendChild(carousel);
-    
+
     // 如果有描述信息，添加描述
     if (singer.description) {
         const description = document.createElement('div');
@@ -159,11 +159,11 @@ function showSingerInfo(singer) {
         description.style.textAlign = 'center';
         singerInfo.appendChild(description);
     }
-    
+
     // 显示歌手信息
     singerInfo.classList.add('show');
     container.style.opacity = '1';
-    
+
     // 初始化幻灯片
     initSingerCarousel(carousel);
 }
@@ -177,17 +177,17 @@ function initSingerCarousel(carousel) {
     const totalSlides = slides.length;
     let currentSlide = 0;
     let slideInterval;
-    
+
     // 设置自动播放
     function startAutoPlay() {
         slideInterval = setInterval(nextSlide, 3000); // 3秒自动切换
     }
-    
+
     // 停止自动播放
     function stopAutoPlay() {
         clearInterval(slideInterval);
     }
-    
+
     // 显示指定幻灯片
     function showSlide(index) {
         // 确保索引在有效范围内
@@ -198,28 +198,28 @@ function initSingerCarousel(carousel) {
         } else {
             currentSlide = index;
         }
-        
+
         // 更新幻灯片状态
         slides.forEach((slide, i) => {
             slide.classList.toggle('active', i === currentSlide);
         });
-        
+
         // 更新指示器状态
         indicators.forEach((indicator, i) => {
             indicator.classList.toggle('active', i === currentSlide);
         });
     }
-    
+
     // 下一张幻灯片
     function nextSlide() {
         showSlide(currentSlide + 1);
     }
-    
+
     // 上一张幻灯片
     function prevSlide() {
         showSlide(currentSlide - 1);
     }
-    
+
     // 点击指示器切换幻灯片
     indicators.forEach((indicator) => {
         indicator.addEventListener('click', () => {
@@ -230,7 +230,7 @@ function initSingerCarousel(carousel) {
             startAutoPlay();
         });
     });
-    
+
     // 点击上一张/下一张按钮
     if (prevBtn && nextBtn) {
         prevBtn.addEventListener('click', () => {
@@ -239,7 +239,7 @@ function initSingerCarousel(carousel) {
             stopAutoPlay();
             startAutoPlay();
         });
-        
+
         nextBtn.addEventListener('click', () => {
             nextSlide();
             // 点击后重置自动播放
@@ -247,13 +247,13 @@ function initSingerCarousel(carousel) {
             startAutoPlay();
         });
     }
-    
+
     // 鼠标悬停时暂停自动播放
     carousel.addEventListener('mouseenter', stopAutoPlay);
-    
+
     // 鼠标离开时恢复自动播放
     carousel.addEventListener('mouseleave', startAutoPlay);
-    
+
     // 开始自动播放
     startAutoPlay();
 }
