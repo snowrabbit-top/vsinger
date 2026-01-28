@@ -6,13 +6,13 @@ function createDiamonds(singers) {
         console.error('菱形形图案容器不存在');
         return;
     }
-    
+
     // 使用容器的实际高度
     const containerHeight = container.offsetHeight;
-    
+
     const diamondCount = singers.length; // 钻石数量
     const spacing = containerHeight / (diamondCount + 1); // 间距
-    
+
     // 创建钻石
     for (let i = 1; i <= diamondCount; i++) {
         const diamond = document.createElement('div');
@@ -21,7 +21,7 @@ function createDiamonds(singers) {
         // 设置位置
         const diamondPosition = i * spacing;
         diamond.style.top = diamondPosition + 'px';
-        
+
         // 添加点击事件
         diamond.addEventListener('click', () => {
             // 移除其他钻石的活跃状态
@@ -305,7 +305,7 @@ async function loadSingers() {
 }
 
 // 等待DOM加载完成后执行
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     loadSingers()
         .then((singers) => {
             createDiamonds(singers);
