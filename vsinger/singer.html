@@ -124,7 +124,6 @@
                     width: 465px; /* 固定宽度465像素 */
                     height: 700px; /* 固定高度700像素 */
                     margin: 0 auto; /* 水平居中 */
-                    margin-left: calc(50% - 400px); /* 向左偏移100像素 */
                     /* border-radius: 8px; 圆角效果已关闭 */
                     /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 阴影效果已关闭 */
                 }
@@ -380,6 +379,133 @@
                     display: block;
                 }
             }
+
+            /* 歌手页面布局与信息面板 */
+            .singer-page-content {
+                width: min(1200px, 100%);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 32px;
+                padding: 32px 20px 60px;
+            }
+
+            .singer-info-panel {
+                width: 100%;
+                max-width: 520px;
+                color: #fff;
+                font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+                --accent-color: #66ccff;
+            }
+
+            .singer-accent {
+                width: 90px;
+                height: 4px;
+                background-color: var(--accent-color);
+                margin-bottom: 16px;
+            }
+
+            .singer-name {
+                font-size: 2.5rem;
+                font-weight: 700;
+                letter-spacing: 2px;
+            }
+
+            .singer-en-name {
+                font-size: 1rem;
+                letter-spacing: 4px;
+                color: rgba(255, 255, 255, 0.7);
+                margin-top: 6px;
+            }
+
+            .singer-color-line {
+                margin-top: 18px;
+                font-size: 1rem;
+                color: #79d1ff;
+            }
+
+            .singer-socials {
+                display: flex;
+                gap: 16px;
+                margin: 22px 0;
+            }
+
+            .singer-socials .social-btn {
+                width: 46px;
+                height: 46px;
+                border-radius: 50%;
+                border: 1px solid rgba(255, 255, 255, 0.4);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+            }
+
+            .singer-socials .social-btn:hover {
+                border-color: var(--accent-color);
+                color: var(--accent-color);
+            }
+
+            .singer-stats {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px 24px;
+                font-size: 1rem;
+                line-height: 1.8;
+            }
+
+            .singer-section {
+                margin-top: 24px;
+            }
+
+            .singer-section h3 {
+                font-size: 1.4rem;
+                font-weight: 600;
+                margin-bottom: 12px;
+            }
+
+            .singer-section p {
+                font-size: 0.95rem;
+                line-height: 1.8;
+                color: rgba(255, 255, 255, 0.82);
+            }
+
+            .carousel-placeholder {
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(circle at top, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.8));
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                text-align: center;
+                border-radius: 8px;
+                padding: 24px;
+            }
+
+            .carousel-placeholder strong {
+                font-size: 2rem;
+                letter-spacing: 2px;
+                margin-bottom: 8px;
+            }
+
+            @media (min-width: 1024px) {
+                .singer-page-content {
+                    flex-direction: row;
+                    align-items: flex-start;
+                    justify-content: center;
+                    gap: 48px;
+                }
+
+                .carousel-container {
+                    margin-left: 0;
+                }
+
+                .singer-info-panel {
+                    padding-top: 40px;
+                }
+            }
         </style>
     </head>
     <body class="font-sans">
@@ -421,50 +547,95 @@
         </div>
 
         <!-- 页面主体内容区域 -->
-        <main class="pt-20 min-h-screen bg-black flex items-center justify-center" style="margin-top: -50px; transform: translateY(0px);"
-        <!-- 轮播图容器 - 使用首页的完整轮播逻辑 -->
-        <div class="carousel-container">
-            <!-- 第一张幻灯片，初始状态为激活 -->
-            <!--
-            <div class="carousel-slide active">
-                <img src="C:\Users\MAX\Desktop\vsinger网站\虚拟歌手\虚拟歌手 _ Vsinger 虚拟歌手官网 — 洛天依、言和、乐正绫、乐正龙牙、徵羽摩柯、墨清弦_files\5836136cca1d92376a95ca356dfeb2d7.png" alt="洛天依 1">
-            </div>
-            -->
-            <!-- 第二张幻灯片 -->
-            <!--
-            <div class="carousel-slide">
-                <img src="C:\Users\MAX\Desktop\vsinger网站\虚拟歌手\虚拟歌手 _ Vsinger 虚拟歌手官网 — 洛天依、言和、乐正绫、乐正龙牙、徵羽摩柯、墨清弦_files\a8be66d04465762b6cd070aa2d0dddfd.png" alt="洛天依 2">
-            </div>
-            -->
-            <!-- 第三张幻灯片 -->
-            <!--
-            <div class="carousel-slide">
-                <img src="C:\Users\MAX\Desktop\vsinger网站\虚拟歌手\虚拟歌手 _ Vsinger 虚拟歌手官网 — 洛天依、言和、乐正绫、乐正龙牙、徵羽摩柯、墨清弦_files\249acb332d7e620bf22fec480469d55f.png" alt="洛天依 3">
-            </div>
-            -->
-            <!-- 第四张幻灯片 -->
-            <div class="carousel-slide active">
-                <img src="C:\Users\MAX\Desktop\vsinger网站\虚拟歌手\虚拟歌手 _ Vsinger 虚拟歌手官网 — 洛天依、言和、乐正绫、乐正龙牙、徵羽摩柯、墨清弦_files\ce9b57faf1e9aa23fe83074ab23801b3.png" alt="洛天依 4">
-            </div>
+        <main class="pt-20 min-h-screen bg-black flex items-center justify-center" style="margin-top: -50px; transform: translateY(0px);">
+            <div class="singer-page-content">
+                <!-- 轮播图容器 - 使用首页的完整轮播逻辑 -->
+                <div class="carousel-container">
+                    <!-- 第一张幻灯片，初始状态为激活 -->
+                    <div class="carousel-slide active" data-singer-id="luotianyi">
+                        <img src="C:\Users\MAX\Desktop\vsinger网站\虚拟歌手\虚拟歌手 _ Vsinger 虚拟歌手官网 — 洛天依、言和、乐正绫、乐正龙牙、徵羽摩柯、墨清弦_files\5836136cca1d92376a95ca356dfeb2d7.png" alt="洛天依">
+                    </div>
+                    <!-- 第二张幻灯片 -->
+                    <div class="carousel-slide" data-singer-id="yanhe">
+                        <img src="C:\Users\MAX\Desktop\vsinger网站\虚拟歌手\虚拟歌手 _ Vsinger 虚拟歌手官网 — 洛天依、言和、乐正绫、乐正龙牙、徵羽摩柯、墨清弦_files\a8be66d04465762b6cd070aa2d0dddfd.png" alt="言和">
+                    </div>
+                    <!-- 第三张幻灯片 -->
+                    <div class="carousel-slide" data-singer-id="yuezhengling">
+                        <img src="C:\Users\MAX\Desktop\vsinger网站\虚拟歌手\虚拟歌手 _ Vsinger 虚拟歌手官网 — 洛天依、言和、乐正绫、乐正龙牙、徵羽摩柯、墨清弦_files\249acb332d7e620bf22fec480469d55f.png" alt="乐正绫">
+                    </div>
+                    <!-- 第四张幻灯片 -->
+                    <div class="carousel-slide" data-singer-id="yuezhenglongya">
+                        <img src="C:\Users\MAX\Desktop\vsinger网站\虚拟歌手\虚拟歌手 _ Vsinger 虚拟歌手官网 — 洛天依、言和、乐正绫、乐正龙牙、徵羽摩柯、墨清弦_files\ce9b57faf1e9aa23fe83074ab23801b3.png" alt="乐正龙牙">
+                    </div>
+                    <!-- 第五张幻灯片 -->
+                    <div class="carousel-slide" data-singer-id="zhiyumohe">
+                        <div class="carousel-placeholder">
+                            <strong>徵羽摩柯</strong>
+                            <span>MO HE</span>
+                        </div>
+                    </div>
+                    <!-- 第六张幻灯片 -->
+                    <div class="carousel-slide" data-singer-id="moqingxian">
+                        <div class="carousel-placeholder">
+                            <strong>墨清弦</strong>
+                            <span>MO QINGXIAN</span>
+                        </div>
+                    </div>
 
-            <!-- 轮播图指示器 -->
-            <div class="carousel-indicators">
-                <div class="indicator active" data-index="0"></div>
-                <div class="indicator" data-index="1"></div>
-                <div class="indicator" data-index="2"></div>
-                <div class="indicator" data-index="3"></div>
-            </div>
+                    <!-- 轮播图指示器 -->
+                    <div class="carousel-indicators">
+                        <div class="indicator active" data-index="0"></div>
+                        <div class="indicator" data-index="1"></div>
+                        <div class="indicator" data-index="2"></div>
+                        <div class="indicator" data-index="3"></div>
+                        <div class="indicator" data-index="4"></div>
+                        <div class="indicator" data-index="5"></div>
+                    </div>
 
-            <!-- 轮播图控制按钮 -->
-            <div class="carousel-controls">
-                <div class="control-btn prev-btn">
-                    <i class="fa fa-chevron-left text-white text-xl"></i>
+                    <!-- 轮播图控制按钮 -->
+                    <div class="carousel-controls">
+                        <div class="control-btn prev-btn">
+                            <i class="fa fa-chevron-left text-white text-xl"></i>
+                        </div>
+                        <div class="control-btn next-btn">
+                            <i class="fa fa-chevron-right text-white text-xl"></i>
+                        </div>
+                    </div>
                 </div>
-                <div class="control-btn next-btn">
-                    <i class="fa fa-chevron-right text-white text-xl"></i>
-                </div>
+
+                <!-- 歌手信息面板 -->
+                <aside class="singer-info-panel" id="singer-info-panel">
+                    <div class="singer-accent" id="singer-accent"></div>
+                    <h2 class="singer-name" id="singer-name">洛天依</h2>
+                    <p class="singer-en-name" id="singer-en-name">LUO TIANYI</p>
+                    <p class="singer-color-line">代表色：<span id="singer-color">#66CCFF</span></p>
+                    <div class="singer-socials">
+                        <div class="social-btn" aria-hidden="true"><i class="fa fa-weibo"></i></div>
+                        <div class="social-btn" aria-hidden="true"><i class="fa fa-music"></i></div>
+                        <div class="social-btn" aria-hidden="true"><i class="fa fa-comments"></i></div>
+                    </div>
+                    <div class="singer-stats">
+                        <div>
+                            <p>年龄：<span id="singer-age">-</span></p>
+                            <p>身高：<span id="singer-height">-</span></p>
+                            <p>乐器：<span id="singer-instrument">-</span></p>
+                        </div>
+                        <div>
+                            <p>生日：<span id="singer-birthday">-</span></p>
+                            <p>音之精灵：<span id="singer-stage-name">-</span></p>
+                            <p>声源：<span id="singer-voice">-</span></p>
+                        </div>
+                    </div>
+                    <div class="singer-section">
+                        <h3>人物设定</h3>
+                        <p id="singer-description">加载中...</p>
+                    </div>
+                    <div class="singer-section">
+                        <h3>歌曲试听</h3>
+                        <p class="text-sm text-gray-400">敬请期待</p>
+                    </div>
+                </aside>
             </div>
-        </div>
         </main>
 
         <!-- 轮播图下方黑色区域 - 根据最新最新参考图片修改 -->
@@ -548,10 +719,57 @@
                 const nextBtn = document.querySelector('.next-btn'); // 获取下一张按钮
                 let currentSlide = 0; // 当前显示的幻灯片索引，初始值为0
                 const totalSlides = slides.length; // 幻灯片总数
+                let singerData = []; // 歌手数据
 
                 // 移动端菜单相关元素
                 const menuToggle = document.getElementById('menu-toggle'); // 获取菜单切换按钮
                 const mobileMenu = document.getElementById('mobile-menu'); // 获取移动端菜单
+                const singerPanel = document.getElementById('singer-info-panel');
+
+                const singerElements = {
+                    accent: document.getElementById('singer-accent'),
+                    name: document.getElementById('singer-name'),
+                    enName: document.getElementById('singer-en-name'),
+                    color: document.getElementById('singer-color'),
+                    age: document.getElementById('singer-age'),
+                    height: document.getElementById('singer-height'),
+                    instrument: document.getElementById('singer-instrument'),
+                    birthday: document.getElementById('singer-birthday'),
+                    stageName: document.getElementById('singer-stage-name'),
+                    voice: document.getElementById('singer-voice'),
+                    description: document.getElementById('singer-description')
+                };
+
+                /**
+                 * 更新右侧歌手信息面板
+                 * @param {number} index 当前轮播图索引
+                 * @return {void}
+                 */
+                function updateSingerPanel(index) {
+                    if (!singerPanel || !slides[index]) return;
+                    const singerId = slides[index].dataset.singerId;
+                    const singer = singerData.find(item => item.id === singerId) || singerData[index];
+                    if (!singer) return;
+
+                    const accentColor = singer.color || '#66ccff';
+                    singerPanel.style.setProperty('--accent-color', accentColor);
+                    if (singerElements.accent) {
+                        singerElements.accent.style.backgroundColor = accentColor;
+                    }
+                    if (singerElements.name) singerElements.name.textContent = singer.name || '-';
+                    if (singerElements.enName) singerElements.enName.textContent = singer.enName || '';
+                    if (singerElements.color) {
+                        singerElements.color.textContent = singer.color || '-';
+                        singerElements.color.style.color = accentColor;
+                    }
+                    if (singerElements.age) singerElements.age.textContent = singer.age || '-';
+                    if (singerElements.height) singerElements.height.textContent = singer.height || '-';
+                    if (singerElements.instrument) singerElements.instrument.textContent = singer.instrument || '-';
+                    if (singerElements.birthday) singerElements.birthday.textContent = singer.birthday || '-';
+                    if (singerElements.stageName) singerElements.stageName.textContent = singer.stageName || '-';
+                    if (singerElements.voice) singerElements.voice.textContent = singer.voice || '-';
+                    if (singerElements.description) singerElements.description.textContent = singer.description || '';
+                }
 
                 /**
                  * 获取设备类型
@@ -629,6 +847,9 @@
                     indicators.forEach((indicator, i) => {
                         indicator.classList.toggle('active', i === currentSlide); // 为当前指示器添加active类
                     });
+
+                    // 更新歌手信息面板
+                    updateSingerPanel(currentSlide);
 
                     // 重置自动播放计时器
                     clearInterval(slideInterval); // 清除现有计时器
@@ -760,6 +981,27 @@
                         document.body.style.overflow = ''; // 恢复背景滚动
                     }
                 });
+
+                // 加载歌手数据并初始化信息面板
+                fetch('../data/singers.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        singerData = Array.isArray(data) ? data : [];
+                        slides.forEach((slide) => {
+                            const placeholder = slide.querySelector('.carousel-placeholder');
+                            const singerId = slide.dataset.singerId;
+                            if (placeholder && singerId) {
+                                const singer = singerData.find(item => item.id === singerId);
+                                if (singer && singer.color) {
+                                    placeholder.style.background = `radial-gradient(circle at top, ${singer.color}33, rgba(0, 0, 0, 0.85))`;
+                                }
+                            }
+                        });
+                        updateSingerPanel(currentSlide);
+                    })
+                    .catch(() => {
+                        updateSingerPanel(currentSlide);
+                    });
             });
         </script>
     </body>
