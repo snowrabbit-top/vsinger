@@ -203,24 +203,24 @@ body {
         left: 15%;
         height: 350px;
     }
-    
+
     /* 调整歌手名字样式 */
     .singer-name {
         font-size: 16px;
         left: 25px;
     }
-    
+
     /* 调整幻灯片容器大小 */
     .singer-carousel {
         height: 400px;
     }
-    
+
     /* 调整控制按钮大小 */
     .singer-control-btn {
         width: 35px;
         height: 35px;
     }
-    
+
     /* 调整指示器大小 */
     .singer-indicator {
         width: 10px;
@@ -238,8 +238,14 @@ body {
 
 /* 动画效果 */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .singer-info.show {
@@ -248,9 +254,15 @@ body {
 
 /* 指示器动画 */
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 .singer-indicator.active {
