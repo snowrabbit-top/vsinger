@@ -23,6 +23,7 @@
             }
         }
     </script>
+    <script src="site.js" defer></script>
     <!-- 自定义CSS样式 -->
     <style type="text/tailwindcss">
         :root {
@@ -437,15 +438,15 @@
         <!-- 汉堡菜单按钮 - 所有设备都显示 -->
         <div>
             <!-- 汉堡菜单按钮，id为menu-toggle -->
-            <div id="menu-toggle" class="menu-btn">
+            <button id="menu-toggle" class="menu-btn bg-transparent border-0 p-0" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mobile-menu">
                 <!-- 汉堡菜单中间线 -->
                 <div class="menu-btn__burger"></div>
-            </div>
+            </button>
         </div>
     </header>
     
     <!-- 汉堡菜单 - 所有设备都使用相同的菜单 -->
-    <div id="mobile-menu" class="fixed top-0 right-0 w-64 h-full bg-black bg-opacity-95 z-40 transform translate-x-full transition-transform 0.3s ease">
+    <div id="mobile-menu" class="fixed top-0 right-0 w-64 h-full bg-black bg-opacity-95 z-40 transform translate-x-full transition-transform 0.3s ease" aria-hidden="true">
         <!-- 导航菜单 -->
         <nav class="flex flex-col space-y-4 p-4 mt-16">
             <!-- 菜单项项：首页 -->
@@ -453,9 +454,9 @@
             <!-- 菜单项：虚拟歌手 -->
             <a href="vsinger.html" class="text-white font-medium py-2 border-b border-gray-700">虚拟歌手</a>
             <!-- 菜单项：线下活动 -->
-            <a href="#" class="text-white font-medium py-2 border-b border-gray-700">线下下活动</a>
+            <a href="events.html" class="text-white font-medium py-2 border-b border-gray-700">线下活动</a>
             <!-- 菜单项：作品 -->
-            <a href="#" class="text-white font-medium py-2 border-b border-gray-700">作品</a>
+            <a href="works.html" class="text-white font-medium py-2 border-b border-gray-700">作品</a>
             <!-- 菜单项：关于我们 -->
             <a href="#" class="text-white font-medium py-2">关于我们</a>
         </nav>
@@ -541,19 +542,19 @@
     </div>
     
     <!-- Staff名单弹窗 -->
-    <div id="staff-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+    <div id="staff-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="staff-modal-title">
         <!-- 背景遮罩 -->
         <div class="absolute inset-0 bg-black bg-opacity-75 transition-opacity duration-300" id="modal-overlay"></div>
         
         <!-- 弹窗内容 -->
-        <div class="relative bg-white rounded-lg p-8 max-w-md w-full mx-4 text-center transform transition-all duration-300 scale-95 opacity-0" id="modal-content">
+        <div class="relative bg-white rounded-lg p-8 max-w-md w-full mx-4 text-center transform transition-all duration-300 scale-95 opacity-0" id="modal-content" tabindex="-1">
             <!-- 关闭按钮 -->
             <button id="close-modal" class="absolute top-2 right-3 text-gray-500 hover:text-gray-700 transition-colors duration-300">
                 <i class="fa fa-times text-xl"></i>
             </button>
             
             <!-- 弹窗标题 -->
-            <h3 class="text-2xl font-bold mb-6 text-black">Staff名单</h3>
+            <h3 class="text-2xl font-bold mb-6 text-black" id="staff-modal-title">Staff名单</h3>
             
             <!-- 弹窗内容 -->
             <div class="text-left space-y-3 text-black">
@@ -570,45 +571,6 @@
         // 等待DOM加载完成后执行
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM加载完成，开始执行JavaScript');
-            
-            // 移动端菜单相关元素
-            const menuToggle = document.getElementById('menu-toggle'); // 获取菜单切换按钮
-            const mobileMenu = document.getElementById('mobile-menu'); // 获取移动端菜单
-            
-            // 汉堡菜单切换逻辑
-            let menuOpen = false; // 菜单是否打开的状态，初始值为false（关闭）
-            
-            // 菜单切换按钮点击事件
-            menuToggle.addEventListener('click', () => {
-                if (!menuOpen) {
-                    // 打开菜单
-                    menuToggle.classList.add('open'); // 添加open类，改变汉堡按钮样式
-                    mobileMenu.classList.remove('menu-slide-out'); // 移除滑出动画类
-                    mobileMenu.classList.add('menu-slide-in'); // 添加滑入动画类
-                    menuOpen = true; // 更新菜单状态为打开
-                } else {
-                    // 关闭菜单
-                    menuToggle.classList.remove('open'); // 移除open类，恢复汉堡按钮样式
-                    mobileMenu.classList.remove('menu-slide-in'); // 移除滑入动画类
-                    mobileMenu.classList.add('menu-slide-out'); // 添加滑出动画类
-                    menuOpen = false; // 更新菜单状态为关闭
-                }
-            });
-            
-            // 点击移动端菜单项点击事件
-            const mobileMenuItems = mobileMenu.querySelectorAll('a'); // 获取所有菜单项
-            mobileMenuItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    // 如果点击的是当前页面的链接，则关闭菜单但不跳转
-                    if (item.getAttribute('href') === window.location.pathname) {
-                        menuToggle.classList.remove('open'); // 移除open类，恢复汉堡按钮样式
-                        mobileMenu.classList.remove('menu-slide-in'); // 移除滑入动画类
-                        mobileMenu.classList.add('menu-slide-out'); // 添加滑出动画类
-                        menuOpen = false; // 更新菜单状态为关闭
-                        return false; // 阻止默认跳转行为
-                    }
-                });
-            });
             
             // 轮播图相关元素
             const slides = document.querySelectorAll('.carousel-slide'); // 获取所有幻灯片
@@ -685,41 +647,6 @@
             // 开始自动播放
             startAutoPlay();
             
-            // Staff名单弹窗功能
-            const staffModal = document.getElementById('staff-modal');
-            const staffListBtn = document.getElementById('staff-list-btn');
-            const closeModal = document.getElementById('close-modal');
-            const modalOverlay = document.getElementById('modal-overlay');
-            const modalContent = document.getElementById('modal-content');
-            
-            // 打开弹窗
-            staffListBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                staffModal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden'; // 防止背景滚动
-                
-                // 添加淡入动画
-                setTimeout(() => {
-                    modalContent.classList.remove('scale-95', 'opacity-0');
-                    modalContent.classList.add('scale-100', 'opacity-100');
-                }, 10);
-            });
-            
-            // 关闭弹窗
-            function closeModalFunc() {
-                // 添加淡出动画
-                modalContent.classList.remove('scale-100', 'opacity-100');
-                modalContent.classList.add('scale-95', 'opacity-0');
-                
-                // 动画结束后完全隐藏弹窗
-                setTimeout(() => {
-                    staffModal.classList.add('hidden');
-                    document.body.style.overflow = ''; // 恢复背景滚动
-                }, 300);
-            }
-            
-            closeModal.addEventListener('click', closeModalFunc);
-            modalOverlay.addEventListener('click', closeModalFunc);
         });
     </script>
 </body></html>

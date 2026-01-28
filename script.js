@@ -1,5 +1,5 @@
 // 创建菱形菱形图案
-function createDiamonds() {
+function createDiamonds(singers) {
     const container = document.querySelector('.diamond-pattern');
     // 确保容器存在
     if (!container) {
@@ -9,57 +9,9 @@ function createDiamonds() {
     
     // 使用容器的实际高度
     const containerHeight = container.offsetHeight;
-    console.log('菱形图案容器高度:', containerHeight);
     
-    const diamondCount = 6; // 钻石数量
+    const diamondCount = singers.length; // 钻石数量
     const spacing = containerHeight / (diamondCount + 1); // 间距
-    console.log('菱形间距:', spacing);
-    
-    // 歌手数据
-    const singers = [
-        {
-            name: '洛天依',
-            images: [
-                'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/57eadd36567f492d8576585a5dc53300.png~tplv-a9rns2rl98-24:720:720.png?rcl=202511060522113C52353834B0E61ACEF3&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1762982532&x-signature=ruhAX1wmnS8HJYOOhac22j5gYGM%3D',
-                'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/55bbca30cb6d489f8d9313bbc3a3528c.png~tplv-a9rns2rl98-24:720:720.png?rcl=202511060522113C52353834B0E61ACEF3&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1762982532&x-signature=ZsquXVdguvgKn%2BXHe2l2%2Bjt06sQ%3D'
-            ],
-        },
-        {
-            name: '言和',
-            images: [
-                'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/c931feaa56c14ecb92343a0661f0e898.png~tplv-a9rns2rl98-24:720:720.png?rcl=202511060522113C52353834B0E61ACEF3&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1762982532&x-signature=29%2BLYALMlXowWFJD8ZsrpmYvCyI%3D',
-                'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/cdd72d2416a3493696fbbc86392ed2db.png~tplv-a9rns2rl98-24:720:720.png?rcl=202511060522113C52353834B0E61ACEF3&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1762982532&x-signature=mnOPzwhavN3HS7h7iT0u4G4vbrc%3D'
-            ],
-        },
-        {
-            name: '乐正绫',
-            images: [
-                'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/8a66620c865e49cba1402c1cfefbf8d1.png~tplv-a9rns2rl98-24:720:720.png?rcl=202511060522113C52353834B0E61ACEF3&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1762982532&x-signature=Y3u6kfGiFg7iWHHCiCgxJLAiXv8%3D',
-                'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/85ddd2e9a8e14d76ac49c5debb23b878.png~tplv-a9rns2rl98-24:720:720.png?rcl=202511060522113C52353834B0E61ACEF3&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1762982532&x-signature=au%2B6zRJRqPJCXr73dDkW8jfBTkk%3D'
-            ],
-        },
-        {
-            name: '乐正龙牙',
-            images: [
-                'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/662bebf2ff2e4d6ba6512d9b45276549.png~tplv-a9rns2rl98-24:720:720.png?rcl=202511060522113C52353834B0E61ACEF3&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1762982532&x-signature=g2%2B9y5ruzWC53SKQ1mZCzphSY0Y%3D',
-                'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/5114e09c91d74de5820e424fa28d2377.png~tplv-a9rns2rl98-24:720:720.png?rcl=202511060522113C52353834B0E61ACEF3&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1762982532&x-signature=vVSEGplk%2By2FDd2e4zoC0seQ674%3D'
-            ],
-        },
-        {
-            name: '徵羽摩柯',
-            images: [
-                'https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/fc337bc8321e4432a29b8817909d302b.png~tplv-a9rns2rl98-24:720:720.png?rcl=2025110605310290FC578AB49DC2077BAB&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1762983062&x-signature=%2B6y7lruYAapJaUQj40eqipdqT64%3D',
-                'https://p26-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/ed72a242c7bd47229ac480473a60328a.png~tplv-a9rns2rl98-24:720:720.png?rcl=2025110605310290FC578AB49DC2077BAB&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1762983062&x-signature=eMjGkOYYV%2BcL5d3B9SxgvE%2BR%2BHE%3D'
-            ],
-        },
-        {
-            name: '墨清弦',
-            images: [
-                'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/ee066290eb8d466b8849d0819b70ce62.png~tplv-a9rns2rl98-24:720:720.png?rcl=202511060522113C52353834B0E61ACEF3&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1762982532&x-signature=I6wN%2B98ORdNr28E2mAoOYYrVnZ0%3D',
-                'https://p3-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/ed03f290e6e44d06aaaa941868b439ad.png~tplv-a9rns2rl98-24:720:720.png?rcl=202511060522113C52353834B0E61ACEF3&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1762982532&x-signature=XJIBZSFBVimQTr9UJnu6QuBAaQ0%3D'
-            ],
-        }
-    ];
     
     // 创建钻石
     for (let i = 1; i <= diamondCount; i++) {
@@ -69,7 +21,6 @@ function createDiamonds() {
         // 设置位置
         const diamondPosition = i * spacing;
         diamond.style.top = diamondPosition + 'px';
-        console.log('菱形', i, '位置:', diamondPosition);
         
         // 添加点击事件
         diamond.addEventListener('click', () => {
@@ -83,6 +34,7 @@ function createDiamonds() {
             
             // 显示对应歌手信息
             showSingerInfo(singers[i - 1]);
+            renderSingerProfile(singers[i - 1]);
         });
         
         // 添加到容器
@@ -104,6 +56,7 @@ function createDiamonds() {
         firstDiamond.classList.add('active');
         // 默认显示第一个歌手信息
         showSingerInfo(singers[0]);
+        renderSingerProfile(singers[0]);
     }
 }
 
@@ -305,49 +258,62 @@ function initSingerCarousel(carousel) {
     startAutoPlay();
 }
 
+function renderSingerProfile(singer) {
+    const profile = document.getElementById('singer-profile');
+    if (!profile || !singer) {
+        return;
+    }
+
+    profile.innerHTML = `
+        <div class="profile-card">
+            <div class="profile-header">
+                <div>
+                    <h2 class="profile-name">${singer.name}</h2>
+                    <p class="profile-en">${singer.enName || ''}</p>
+                </div>
+                <div class="profile-color" style="--accent:${singer.color || '#ffffff'};">
+                    <span>代表色：</span>
+                    <strong>${singer.color || ''}</strong>
+                </div>
+            </div>
+            <div class="profile-meta">
+                <div>
+                    <p>年龄：${singer.age || '-'}</p>
+                    <p>身高：${singer.height || '-'}</p>
+                    <p>乐器：${singer.instrument || '-'}</p>
+                </div>
+                <div>
+                    <p>生日：${singer.birthday || '-'}</p>
+                    <p>音之精灵：${singer.stageName || '-'}</p>
+                    <p>声源：${singer.voice || '-'}</p>
+                </div>
+            </div>
+            <div class="profile-section">
+                <h3>人物设定</h3>
+                <p>${singer.description || ''}</p>
+            </div>
+        </div>
+    `;
+}
+
+async function loadSingers() {
+    const response = await fetch('data/singers.json');
+    if (!response.ok) {
+        throw new Error('无法加载歌手数据');
+    }
+    return response.json();
+}
+
 // 等待DOM加载完成后执行
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM加载完成，开始执行JavaScript');
-    
-    // 创建菱形图案
-    createDiamonds();
-    
-    // 移动端菜单相关元素
-    const menuToggle = document.getElementById('menu-toggle'); // 获取菜单切换按钮
-    const mobileMenu = document.getElementById('mobile-menu'); // 获取移动端菜单
-    
-    // 汉堡菜单切换逻辑
-    let menuOpen = false; // 菜单是否打开的状态，初始值为false（关闭）
-    
-    // 菜单切换按钮点击事件
-    menuToggle.addEventListener('click', () => {
-        if (!menuOpen) {
-            // 打开菜单
-            menuToggle.classList.add('open'); // 添加open类，改变汉堡按钮样式
-            mobileMenu.classList.remove('menu-slide-out'); // 移除滑出动画类
-            mobileMenu.classList.add('menu-slide-in'); // 添加滑入动画类
-            menuOpen = true; // 更新菜单状态为打开
-        } else {
-            // 关闭菜单
-            menuToggle.classList.remove('open'); // 移除open类，恢复汉堡汉堡按钮样式
-            mobileMenu.classList.remove('menu-slide-in'); // 移除滑入动画类
-            mobileMenu.classList.add('menu-slide-out'); // 添加滑出动画类
-            menuOpen = false; // 更新菜单状态为关闭
-        }
-    });
-    
-    // 点击移动端菜单项点击事件
-    const mobileMenuItems = mobileMenu.querySelectorAll('a'); // 获取所有菜单项
-    mobileMenuItems.forEach(item => {
-        item.addEventListener('click', () => {
-            // 如果点击的是当前页面的链接，则关闭菜单但不跳转
-            if (item.getAttribute('href') === window.location.pathname) {
-                menuToggle.classList.remove('open'); // 移除open类，恢复汉堡按钮样式
-                mobileMenu.classList.remove('menu-slide-in'); // 移除滑入动画类
-                mobileMenu.classList.add('menu-slide-out'); // 添加滑出动画类
-                menuOpen = false; // 更新菜单状态为关闭
-                return false; // 阻止默认跳转行为
+    loadSingers()
+        .then((singers) => {
+            createDiamonds(singers);
+        })
+        .catch(() => {
+            const profile = document.getElementById('singer-profile');
+            if (profile) {
+                profile.innerHTML = '<div class="profile-card">歌手数据加载失败。</div>';
             }
         });
-    });
 });
