@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活动详情 - Vsinger</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#6366F1',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="site.js" defer></script>
+    <script src="events-data.js" defer></script>
+    <script src="event-detail.js" defer></script>
+    <style type="text/tailwindcss">
+        :root {
+            --menu-burger-color: white;
+        }
+
+        @layer utilities {
+            .menu-btn {
+                position: relative;
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+                z-index: 50;
+            }
+
+            .menu-btn__burger {
+                position: absolute;
+                width: 28px;
+                height: 3px;
+                background: var(--menu-burger-color);
+                border-radius: 5px;
+                transition: all 0.5s ease-in-out;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .menu-btn__burger::before,
+            .menu-btn__burger::after {
+                content: '';
+                position: absolute;
+                width: 28px;
+                height: 3px;
+                background: var(--menu-burger-color);
+                border-radius: 5px;
+                transition: all 0.5s ease-in-out;
+            }
+
+            .menu-btn__burger::before {
+                transform: translateY(-10px);
+            }
+
+            .menu-btn__burger::after {
+                transform: translateY(10px);
+            }
+
+            .menu-btn.open .menu-btn__burger {
+                transform: translateX(-50px);
+                background: transparent;
+            }
+
+            .menu-btn.open .menu-btn__burger::before {
+                transform: rotate(45deg) translate(35px, -35px);
+            }
+
+            .menu-btn.open .menu-btn__burger::after {
+                transform: rotate(-45deg) translate(35px, 35px);
+            }
+
+            .menu-slide-in {
+                animation: slideIn 0.5s forwards;
+            }
+
+            .menu-slide-out {
+                animation: slideOut 0.5s forwards;
+            }
+
+            @keyframes slideIn {
+                from { transform: translateX(100%); }
+                to { transform: translateX(0); }
+            }
+
+            @keyframes slideOut {
+                from { transform: translateX(0); }
+                to { transform: translateX(100%); }
+            }
+        }
+    </style>
+</head>
+<body class="font-sans bg-black text-white min-h-screen">
+    <header class="fixed top-0 left-0 right-0 z-50 flex justify-between items-center p-4">
+        <div class="logo">
+            <a href="index.html" class="flex items-center">
+                <img src="https://p11-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/633cd88a74b440f7b3e46e017871317f.png~tplv-a9rns2rl98-24:720:720.png?rcl=20251106040901589D909647E231041ED4&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1762978141&x-signature=S%2BuUqlNlwks5WBNk9GQ0NvpNCvY%3D" alt="Vsinger Logo" class="h-10">
+            </a>
+        </div>
+        <div>
+            <button id="menu-toggle" class="menu-btn bg-transparent border-0 p-0" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mobile-menu">
+                <div class="menu-btn__burger"></div>
+            </button>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="fixed top-0 right-0 w-64 h-full bg-black bg-opacity-95 z-40 transform translate-x-full transition-transform 0.3s ease" aria-hidden="true">
+        <nav class="flex flex-col space-y-4 p-4 mt-16">
+            <a href="index.html" class="text-white font-medium py-2 border-b border-gray-700">首页</a>
+            <a href="vsinger.html" class="text-white font-medium py-2 border-b border-gray-700">虚拟歌手</a>
+            <a href="events.html" class="text-white font-medium py-2 border-b border-gray-700">线下活动</a>
+            <a href="works.html" class="text-white font-medium py-2 border-b border-gray-700">作品</a>
+            <a href="#" class="text-white font-medium py-2">关于我们</a>
+        </nav>
+    </div>
+
+    <main class="pt-24 pb-12 px-6 max-w-5xl mx-auto" id="event-detail">
+        <div class="text-center text-gray-400">正在加载活动详情...</div>
+    </main>
+</body>
+</html>
