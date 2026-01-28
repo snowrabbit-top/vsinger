@@ -7,12 +7,6 @@ function createDiamonds() {
         return;
     }
     
-    // 使用容器的实际高度
-    const containerHeight = container.offsetHeight;
-    
-    const diamondCount = singers.length; // 钻石数量
-    const spacing = containerHeight / (diamondCount + 1); // 间距
-    
     // 歌手数据
     const singers = [
         {
@@ -58,6 +52,12 @@ function createDiamonds() {
             ],
         }
     ];
+
+    // 使用容器的实际高度
+    const containerHeight = container.offsetHeight;
+    
+    const diamondCount = singers.length; // 钻石数量
+    const spacing = containerHeight / (diamondCount + 1); // 间距
     
     // 创建钻石
     for (let i = 1; i <= diamondCount; i++) {
