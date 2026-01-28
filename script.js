@@ -1,64 +1,18 @@
 // 创建菱形菱形图案
-function createDiamonds() {
+function createDiamonds(singers) {
     const container = document.querySelector('.diamond-pattern');
     // 确保容器存在
     if (!container) {
         console.error('菱形形图案容器不存在');
         return;
     }
-
-    // 歌手数据
-    const singers = [
-        {
-            name: '洛天依',
-            images: [
-                'https://res.vsinger.com/images/5836136cca1d92376a95ca356dfeb2d7.png?x-oss-process=image/resize,w_400',
-                'https://res.vsinger.com/images/a8be66d04465762b6cd070aa2d0dddfd.png?x-oss-process=image/resize,w_400'
-            ],
-        },
-        {
-            name: '言和',
-            images: [
-                'https://res.vsinger.com/images/1bf9144da5261fd5a95a8f3ca19117a9.png?x-oss-process=image/resize,w_400',
-                'https://res.vsinger.com/images/cd24c3abd0e6f79effd061ba03723bae.png?x-oss-process=image/resize,w_400'
-            ],
-        },
-        {
-            name: '乐正绫',
-            images: [
-                'https://res.vsinger.com/images/cb0a2d829a1dba342fdb6471303fe4c5.png?x-oss-process=image/resize,w_400',
-                'https://res.vsinger.com/images/03c033f2f83387a5124b6cab13b6a3cf.png?x-oss-process=image/resize,w_400'
-            ],
-        },
-        {
-            name: '乐正龙牙',
-            images: [
-                'https://res.vsinger.com/images/4736240d74985585d4aad8c79e536d1a.png?x-oss-process=image/resize,w_400',
-                'https://res.vsinger.com/images/335898340fdd1e7f35dc314445718799.png?x-oss-process=image/resize,w_400'
-            ],
-        },
-        {
-            name: '徵羽摩柯',
-            images: [
-                'https://res.vsinger.com/images/ec7b130d2e36888de23c91191223c64d.png?x-oss-process=image/resize,w_400',
-                'https://res.vsinger.com/images/5ae1381e26a75a8017afec5671ad3fcd.png?x-oss-process=image/resize,w_400'
-            ],
-        },
-        {
-            name: '墨清弦',
-            images: [
-                'https://res.vsinger.com/images/473f5dbedd6fee74184df3982c143e41.png?x-oss-process=image/resize,w_400',
-                'https://res.vsinger.com/images/f0884f53b399a6f5dd5c774fe20f2f18.png?x-oss-process=image/resize,w_400'
-            ],
-        }
-    ];
-
+    
     // 使用容器的实际高度
     const containerHeight = container.offsetHeight;
-
+    
     const diamondCount = singers.length; // 钻石数量
     const spacing = containerHeight / (diamondCount + 1); // 间距
-
+    
     // 创建钻石
     for (let i = 1; i <= diamondCount; i++) {
         const diamond = document.createElement('div');
@@ -67,7 +21,7 @@ function createDiamonds() {
         // 设置位置
         const diamondPosition = i * spacing;
         diamond.style.top = diamondPosition + 'px';
-
+        
         // 添加点击事件
         diamond.addEventListener('click', () => {
             // 移除其他钻石的活跃状态
@@ -80,6 +34,7 @@ function createDiamonds() {
 
             // 显示对应歌手信息
             showSingerInfo(singers[i - 1]);
+            renderSingerProfile(singers[i - 1]);
         });
 
         // 添加到容器
@@ -101,6 +56,7 @@ function createDiamonds() {
         firstDiamond.classList.add('active');
         // 默认显示第一个歌手信息
         showSingerInfo(singers[0]);
+        renderSingerProfile(singers[0]);
     }
 }
 
@@ -302,8 +258,62 @@ function initSingerCarousel(carousel) {
     startAutoPlay();
 }
 
+function renderSingerProfile(singer) {
+    const profile = document.getElementById('singer-profile');
+    if (!profile || !singer) {
+        return;
+    }
+
+    profile.innerHTML = `
+        <div class="profile-card">
+            <div class="profile-header">
+                <div>
+                    <h2 class="profile-name">${singer.name}</h2>
+                    <p class="profile-en">${singer.enName || ''}</p>
+                </div>
+                <div class="profile-color" style="--accent:${singer.color || '#ffffff'};">
+                    <span>代表色：</span>
+                    <strong>${singer.color || ''}</strong>
+                </div>
+            </div>
+            <div class="profile-meta">
+                <div>
+                    <p>年龄：${singer.age || '-'}</p>
+                    <p>身高：${singer.height || '-'}</p>
+                    <p>乐器：${singer.instrument || '-'}</p>
+                </div>
+                <div>
+                    <p>生日：${singer.birthday || '-'}</p>
+                    <p>音之精灵：${singer.stageName || '-'}</p>
+                    <p>声源：${singer.voice || '-'}</p>
+                </div>
+            </div>
+            <div class="profile-section">
+                <h3>人物设定</h3>
+                <p>${singer.description || ''}</p>
+            </div>
+        </div>
+    `;
+}
+
+async function loadSingers() {
+    const response = await fetch('data/singers.json');
+    if (!response.ok) {
+        throw new Error('无法加载歌手数据');
+    }
+    return response.json();
+}
+
 // 等待DOM加载完成后执行
-document.addEventListener('DOMContentLoaded', function () {
-    // 创建菱形图案
-    createDiamonds();
+document.addEventListener('DOMContentLoaded', function() {
+    loadSingers()
+        .then((singers) => {
+            createDiamonds(singers);
+        })
+        .catch(() => {
+            const profile = document.getElementById('singer-profile');
+            if (profile) {
+                profile.innerHTML = '<div class="profile-card">歌手数据加载失败。</div>';
+            }
+        });
 });

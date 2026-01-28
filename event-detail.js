@@ -1,4 +1,12 @@
-function renderEventDetail() {
+async function loadEventsData() {
+    const response = await fetch('data/events.json');
+    if (!response.ok) {
+        throw new Error('无法加载活动数据');
+    }
+    return response.json();
+}
+
+function renderEventDetail(eventsData) {
     const container = document.getElementById('event-detail');
     if (!container) return;
 
@@ -30,4 +38,13 @@ function renderEventDetail() {
     `;
 }
 
-document.addEventListener('DOMContentLoaded', renderEventDetail);
+document.addEventListener('DOMContentLoaded', () => {
+    loadEventsData()
+        .then((data) => renderEventDetail(data))
+        .catch(() => {
+            const container = document.getElementById('event-detail');
+            if (container) {
+                container.innerHTML = '<div class="text-center text-gray-400">活动数据加载失败。</div>';
+            }
+        });
+});

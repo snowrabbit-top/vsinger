@@ -1,41 +1,12 @@
-const worksData = [
-    {
-        singer: '洛天依',
-        title: '东京不太热',
-        date: '2015-07-15',
-        cover: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-        singer: '洛天依',
-        title: '普通disco',
-        date: '2015-11-01',
-        cover: 'https://images.unsplash.com/photo-1521336575822-6da63fb45455?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-        singer: '言和',
-        title: '霜雪千年',
-        date: '2016-03-08',
-        cover: 'https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-        singer: '乐正绫',
-        title: '十面埋伏',
-        date: '2017-05-20',
-        cover: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-        singer: '乐正龙牙',
-        title: '戏腔',
-        date: '2018-09-14',
-        cover: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80',
-    },
-    {
-        singer: '墨清弦',
-        title: '山海入梦',
-        date: '2019-12-10',
-        cover: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=800&q=80',
-    },
-];
+let worksData = [];
+
+async function loadWorksData() {
+    const response = await fetch('data/works.json');
+    if (!response.ok) {
+        throw new Error('无法加载作品数据');
+    }
+    return response.json();
+}
 
 function renderSingerOptions() {
     const select = document.getElementById('singer-filter');
@@ -88,8 +59,18 @@ function renderWorks(filterSinger = 'all') {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    renderSingerOptions();
-    renderWorks();
+    loadWorksData()
+        .then((data) => {
+            worksData = data;
+            renderSingerOptions();
+            renderWorks();
+        })
+        .catch(() => {
+            const grid = document.getElementById('works-grid');
+            if (grid) {
+                grid.innerHTML = '<div class="col-span-full text-center text-gray-400 py-12">作品数据加载失败。</div>';
+            }
+        });
 
     const select = document.getElementById('singer-filter');
     if (select) {

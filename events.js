@@ -1,3 +1,13 @@
+let eventsData = [];
+
+async function loadEventsData() {
+    const response = await fetch('data/events.json');
+    if (!response.ok) {
+        throw new Error('无法加载活动数据');
+    }
+    return response.json();
+}
+
 function renderAddressOptions() {
     const select = document.getElementById('address-filter');
     if (!select) return;
@@ -54,8 +64,18 @@ function renderEvents(filterAddress = 'all', filterDate = '') {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    renderAddressOptions();
-    renderEvents();
+    loadEventsData()
+        .then((data) => {
+            eventsData = data;
+            renderAddressOptions();
+            renderEvents();
+        })
+        .catch(() => {
+            const list = document.getElementById('events-list');
+            if (list) {
+                list.innerHTML = '<div class="col-span-full text-center text-gray-400 py-12">活动数据加载失败。</div>';
+            }
+        });
 
     const addressSelect = document.getElementById('address-filter');
     const dateInput = document.getElementById('date-filter');

@@ -23,14 +23,25 @@
                     }
                 }
             }
-        </script>
-        <script src="site.js" defer></script>
-        <!-- 自定义CSS样式 -->
-        <style type="text/tailwindcss">
-            :root {
-                --menu-burger-color: white;
-                --logo-shadow: 0 2px 4px rgba(255, 255, 255, 0.2);
-                --logo-transition: all 0.3s ease;
+        }
+    </script>
+    <script src="site.js" defer></script>
+    <!-- 自定义CSS样式 -->
+    <style type="text/tailwindcss">
+        :root {
+            --menu-burger-color: white;
+            --logo-shadow: 0 2px 4px rgba(255, 255, 255, 0.2);
+            --logo-transition: all 0.3s ease;
+        }
+        
+        @layer utilities {
+            /* 汉堡菜单按钮样式 */
+            .menu-btn {
+                position: relative; /* 相对定位位 */
+                width: 30px; /* 宽度为30像素 */
+                height: 30px; /* 高度为30像素 */
+                cursor: pointer; /* 鼠标悬停时显示手型 */
+                z-index: 50; /* 确保在其他元素上方 */
             }
 
             @layer utilities {
@@ -266,88 +277,102 @@
                     }
                 }
             }
-        </style>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body class="font-sans bg-black">
-        <!-- 导航栏 -->
-        <header class="fixed top-0 left-0 right-0 z-50 flex justify-between items-center p-4">
-            <!-- Logo -->
-            <div class="logo">
-                <a href="index.html" class="flex items-center">
-                    <!-- Logo图片 -->
-                    <div class="logo-container">
-                        <img src="https://vsinger.com/images/logo.png" alt="Vsinger Logo" class="logo-img">
-                    </div>
-                </a>
-            </div>
-
-            <!-- 汉堡菜单按钮 - 所有设备都显示 -->
-            <div>
-                <!-- 汉堡菜单按钮，id为menu-toggle -->
-                <button id="menu-toggle" class="menu-btn bg-transparent border-0 p-0" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mobile-menu">
-                    <!-- 汉堡菜单中间线 -->
-                    <div class="menu-btn__burger"></div>
-                </button>
-            </div>
-        </header>
-
-        <!-- 菱形图案 -->
-        <div class="diamond-pattern"></div>
-
-        <!-- 歌手信息展示区域 -->
-        <div id="singer-info-container" class="fixed top-0 left-[20%] w-1/2 h-full flex items-center justify-center z-10 opacity-0 transition-opacity 0.5s ease"></div>
-
-        <!-- 汉堡菜单 - 所有设备都使用相同的菜单 -->
-        <div id="mobile-menu" class="fixed top-0 right-0 w-64 h-full bg-black bg-opacity-95 z-40 transform translate-x-full transition-transform 0.3s ease" aria-hidden="true">
-            <!-- 导航菜单 -->
-            <nav class="flex flex-col space-y-4 p-4 mt-16">
-                <!-- 菜单项：首页 -->
-                <a href="index.html" class="text-white font-medium py-2 border-b border-gray-700">首页</a>
-                <!-- 菜单项：虚拟歌手 -->
-                <a href="vsinger.html" class="text-white font-medium py-2 border-b border-gray-700">虚拟歌手</a>
-                <!-- 菜单项：线下活动 -->
-                <a href="events.html" class="text-white font-medium py-2 border-b border-gray-700">线下活动</a>
-                <!-- 菜单项：作品 -->
-                <a href="works.html" class="text-white font-medium py-2 border-b border-gray-700">作品</a>
-                <!-- 菜单项：关于我们 -->
-                <a href="#" class="text-white font-medium py-2">关于我们</a>
-            </nav>
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="font-sans bg-black">
+    <!-- 导航栏 -->
+    <header class="fixed top-0 left-0 right-0 z-50 flex justify-between items-center p-4">
+        <!-- Logo -->
+        <div class="logo">
+            <a href="index.html" class="flex items-center">
+                <!-- Logo图片 -->
+                <div class="logo-container">
+                    <img src="https://p11-flow-imagex-download-sign.byteimg.com/tos-cn-i-a9rns2rl98/633cd88a74b440f7b3e46e017871317f.png~tplv-a9rns2rl98-24:720:720.png?rcl=20251106040901589D909647E231041ED4&rk3s=8e244e95&rrcfp=8a172a1a&x-expires=1762978141&x-signature=S%2BuUqlNlwks5WBNk9GQ0NvpNCvY%3D" alt="Vsinger Logo" class="logo-img">
+                </div>
+            </a>
         </div>
+        
+        <!-- 汉堡菜单按钮 - 所有设备都显示 -->
+        <div>
+            <!-- 汉堡菜单按钮，id为menu-toggle -->
+            <button id="menu-toggle" class="menu-btn bg-transparent border-0 p-0" type="button" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mobile-menu">
+                <!-- 汉堡菜单中间线 -->
+                <div class="menu-btn__burger"></div>
+            </button>
+        </div>
+    </header>
+    
+    <!-- 菱形图案 -->
+    <div class="diamond-pattern"></div>
+    
+    <!-- 歌手信息展示区域 -->
+    <div id="singer-info-container" class="fixed top-0 left-[20%] w-1/2 h-full flex items-center justify-center z-10 opacity-0 transition-opacity 0.5s ease"></div>
 
-        <!-- 页脚 -->
-        <div class="footer-area">
-            <div class="footer-content">
-                <div class="footer-main">
-                    <!-- 第一列 -->
-                    <div class="footer-column">
-                        <a href="#" class="footer-link">合作网站</a>
-                    </div>
+    <!-- 歌手描述区域 -->
+    <aside id="singer-profile" class="fixed top-24 right-8 w-[320px] z-10"></aside>
+    
+    <!-- 汉堡菜单 - 所有设备都使用相同的菜单 -->
+    <div id="mobile-menu" class="fixed top-0 right-0 w-64 h-full bg-black bg-opacity-95 z-40 transform translate-x-full transition-transform 0.3s ease" aria-hidden="true">
+        <!-- 导航菜单 -->
+        <nav class="flex flex-col space-y-4 p-4 mt-16">
+            <!-- 菜单项：首页 -->
+            <a href="index.html" class="text-white font-medium py-2 border-b border-gray-700">首页</a>
+            <!-- 菜单项：虚拟歌手 -->
+            <a href="vsinger.html" class="text-white font-medium py-2 border-b border-gray-700">虚拟歌手</a>
+            <!-- 菜单项：线下活动 -->
+            <a href="events.html" class="text-white font-medium py-2 border-b border-gray-700">线下活动</a>
+            <!-- 菜单项：作品 -->
+            <a href="works.html" class="text-white font-medium py-2 border-b border-gray-700">作品</a>
+            <!-- 菜单项：关于我们 -->
+            <a href="#" class="text-white font-medium py-2">关于我们</a>
+        </nav>
+    </div>
 
-                    <!-- 分隔符 -->
-                    <div class="footer-separator">|</div>
-
-                    <!-- 第二列 -->
-                    <div class="footer-column">
-                        <a href="#" class="footer-link">加入我们</a>
-                    </div>
-
-                    <!-- 分隔符 -->
-                    <div class="footer-separator">|</div>
-
-                    <!-- 第三列 -->
-                    <div class="footer-column">
-                        <a href="#" class="footer-link" id="staff-list-btn">staff名单</a>
-                    </div>
+    <!-- 页脚 -->
+    <div class="footer-area">
+        <div class="footer-content">
+            <div class="footer-main">
+                <!-- 第一列 -->
+                <div class="footer-column">
+                    <a href="#" class="footer-link">合作网站</a>
+                </div>
+                
+                <!-- 分隔符 -->
+                <div class="footer-separator">|</div>
+                
+                <!-- 第二列 -->
+                <div class="footer-column">
+                    <a href="#" class="footer-link">加入我们</a>
+                </div>
+                
+                <!-- 分隔符 -->
+                <div class="footer-separator">|</div>
+                
+                <!-- 第三列 -->
+                <div class="footer-column">
+                    <a href="#" class="footer-link" id="staff-list-btn">staff名单</a>
                 </div>
             </div>
         </div>
-
-        <!-- Staff名单弹窗 -->
-        <div id="staff-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="staff-modal-title">
-            <!-- 背景遮罩 -->
-            <div class="absolute inset-0 bg-black bg-opacity-75 transition-opacity duration-300" id="modal-overlay"></div>
-
+    </div>
+    
+    <!-- Staff名单弹窗 -->
+    <div id="staff-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="staff-modal-title">
+        <!-- 背景遮罩 -->
+        <div class="absolute inset-0 bg-black bg-opacity-75 transition-opacity duration-300" id="modal-overlay"></div>
+        
+        <!-- 弹窗内容 -->
+        <div class="relative bg-white rounded-lg p-8 max-w-md w-full mx-4 text-center transform transition-all duration-300 scale-95 opacity-0" id="modal-content" tabindex="-1">
+            <!-- 关闭按钮 -->
+            <button id="close-modal" class="absolute top-2 right-3 text-gray-500 hover:text-gray-700 transition-colors duration-300">
+                <i class="fa fa-times text-xl"></i>
+            </button>
+            
+            <!-- 弹窗标题 -->
+            <h3 class="text-2xl font-bold mb-6 text-black" id="staff-modal-title">Staff名单</h3>
+            
             <!-- 弹窗内容 -->
             <div class="relative bg-white rounded-lg p-8 max-w-md w-full mx-4 text-center transform transition-all duration-300 scale-95 opacity-0" id="modal-content" tabindex="-1">
                 <!-- 关闭按钮 -->
@@ -367,7 +392,8 @@
                 </div>
             </div>
         </div>
-
-        <script src="script.js" defer></script>
-    </body>
+    </div>
+    
+    <script src="script.js" defer></script>
+</body>
 </html>

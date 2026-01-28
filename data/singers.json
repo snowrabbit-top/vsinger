@@ -1,0 +1,80 @@
+[
+  {
+    "id": "luotianyi",
+    "name": "洛天依",
+    "enName": "LUO TIANYI",
+    "color": "#66CCFF",
+    "age": "15岁",
+    "height": "156cm",
+    "instrument": "古筝",
+    "birthday": "7月12日",
+    "stageName": "天依",
+    "voice": "山新",
+    "description": "性格活泼开朗，喜欢美食与音乐，总能带来元气满满的舞台。"
+  },
+  {
+    "id": "yanhe",
+    "name": "言和",
+    "enName": "YAN HE",
+    "color": "#66FFCC",
+    "age": "17岁",
+    "height": "160cm",
+    "instrument": "手风琴",
+    "birthday": "7月10日",
+    "stageName": "言和",
+    "voice": "杨梦露",
+    "description": "温柔冷静，富有责任感，擅长用细腻的歌声传递情绪。"
+  },
+  {
+    "id": "yuezhengling",
+    "name": "乐正绫",
+    "enName": "YUEZHENG LING",
+    "color": "#FF99AA",
+    "age": "16岁",
+    "height": "160cm",
+    "instrument": "琵琶",
+    "birthday": "4月12日",
+    "stageName": "阿绫",
+    "voice": "祈Inory",
+    "description": "帅气又可爱，喜欢摇滚与运动，是舞台上的能量担当。"
+  },
+  {
+    "id": "yuezhenglongya",
+    "name": "乐正龙牙",
+    "enName": "YUEZHENG LONGYA",
+    "color": "#8899FF",
+    "age": "19岁",
+    "height": "180cm",
+    "instrument": "中提琴",
+    "birthday": "9月19日",
+    "stageName": "龙牙",
+    "voice": "卡修",
+    "description": "优雅沉稳，热爱古典音乐，擅长营造厚重而深情的舞台氛围。"
+  },
+  {
+    "id": "zhiyumohe",
+    "name": "徵羽摩柯",
+    "enName": "MO HE",
+    "color": "#FFD166",
+    "age": "17岁",
+    "height": "171cm",
+    "instrument": "低音贝斯",
+    "birthday": "5月20日",
+    "stageName": "摩柯",
+    "voice": "冥月",
+    "description": "神秘又温柔，擅长把低音的魅力注入舞台。"
+  },
+  {
+    "id": "moqingxian",
+    "name": "墨清弦",
+    "enName": "MO QINGXIAN",
+    "color": "#FFFF00",
+    "age": "17岁",
+    "height": "171cm",
+    "instrument": "低音贝斯",
+    "birthday": "5月20日",
+    "stageName": "弦青",
+    "voice": "冥月",
+    "description": "总是带着轻微的低血压状态，气质神秘又优雅，擅长古典与诗意表达。"
+  }
+]
